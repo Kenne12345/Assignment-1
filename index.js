@@ -25,7 +25,7 @@ app.get("/", (req, res) => {
     req.session.numPageHits++;
   }
   numPageHits++;
-  res.send("You have visited this page " + numPageHits + " times! :D");
+  res.send("You have visited this page " + numPageHits + " times! :)");
 });
 
 app.listen(port, () => {
