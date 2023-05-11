@@ -9,7 +9,6 @@ const saltRounds = 12;
 
 const port = process.env.PORT || 3020;
 const app = express();
-app.use(session({ secret: '' }));
 
 const Joi = require("joi");
 
@@ -97,7 +96,7 @@ app.get("/nosql-injection", async (req, res) => {
 app.get("/about", (req, res) => {
   var color = req.query.color;
 
-  res.send("<h1 style='color:" + color + ";'>Kenneth's Website</h1>");
+  res.send("<h1 style='color:" + color + ";'>Kenneth Ahn</h1>");
 });
 
 app.get("/contact", (req, res) => {
@@ -239,11 +238,12 @@ app.get("/loggedIn", (req, res) => {
   }
 
   var html = `
-    <h1>Hello ${req.session.username}!</h1>
-    </br>
-    <br></br>
-    <a href='/logout'>Logout</a>
-    `;
+  <h1>Hello ${req.session.username}!</h1>
+  </br>
+  <a href='/members'>Members</a>
+  <br></br>
+  <a href='/logout'>Logout</a>
+  `;
   res.send(html);
 });
 
