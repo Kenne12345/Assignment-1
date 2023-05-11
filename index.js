@@ -9,11 +9,12 @@ const saltRounds = 12;
 
 const port = process.env.PORT || 3020;
 const app = express();
+app.use(session({ secret: '' }));
 
 const Joi = require("joi");
 
 //Expires after 1 hour
-const expireTime = 1 * 60 * 60 * 1000;
+const expireTime = 24 * 60 * 60 * 1000; //expires after 1 day  (hours * minutes * seconds * millis)
 
 /* Secret Information Section */
 const mongodb_host = process.env.MONGODB_HOST;
@@ -26,12 +27,13 @@ const node_session_secret = process.env.NODE_SESSION_SECRET;
 /* End Secret Information Section */
 
 var { database } = require("./databaseConnection");
+
 const userCollection = database.db(mongodb_database).collection("users");
 
 app.use(express.urlencoded({ extended: false }));
 
 var mongoStore = MongoStore.create({
-  mongoUrl: "mongodb+srv://Kenne12345:Canada20@kenneth.wqgdmxq.mongodb.net/",
+  mongoUrl: `mongodb+srv://${mongodb_user}:${mongodb_password}@${mongodb_host}/sessions`,
   crypto: {
     secret: mongodb_session_secret,
   },
@@ -239,7 +241,6 @@ app.get("/loggedIn", (req, res) => {
   var html = `
     <h1>Hello ${req.session.username}!</h1>
     </br>
-    <a href='/members'>Members</a>
     <br></br>
     <a href='/logout'>Logout</a>
     `;
